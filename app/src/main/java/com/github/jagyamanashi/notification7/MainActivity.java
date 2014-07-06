@@ -1,6 +1,7 @@
-package com.github.jagyamanashi.notification1;
+package com.github.jagyamanashi.notification7;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,24 +54,34 @@ public class MainActivity extends Activity {
     }
 
     private void showNotification() {
-        int notificationId = 001;
-        String eventTitle = "Event Title";
-        String eventLocation = "Event Location";
+        int notificationId1 = 007;
+        String sender1 = "xxx@xxx.xxx";
+        String subject1 = "Subject 1";
 
-        Intent viewIntent = new Intent(this, MainActivity.class);
-        PendingIntent viewPendingIntent =
-                PendingIntent.getActivity(this, 0, viewIntent, 0);
+        int notificationId2 = 010;
+        String sender2 = "yyy@yyy.yyy";
+        String subject2 = "Subject 2";
 
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
+        final String GROUP_KEY_EMAILS = "group_key_emails";
+
+        Notification notif = new NotificationCompat.Builder(this)
+                .setContentTitle("New mail from " + sender1)
+                .setContentText(subject1)
                 .setSmallIcon(R.drawable.ic_stat_smile)
-                .setContentTitle(eventTitle)
-                .setContentText(eventLocation)
-                .setContentIntent(viewPendingIntent);
+                .setGroup(GROUP_KEY_EMAILS)
+                .build();
 
         NotificationManagerCompat notificationManager =
                 NotificationManagerCompat.from(this);
+        notificationManager.notify(notificationId1, notif);
 
-        notificationManager.notify(notificationId, notificationBuilder.build());
+        Notification notif2 = new NotificationCompat.Builder(this)
+                .setContentTitle("New mail from " + sender2)
+                .setContentText(subject2)
+                .setSmallIcon(R.drawable.ic_stat_smile)
+                .setGroup(GROUP_KEY_EMAILS)
+                .build();
+
+        notificationManager.notify(notificationId2, notif2);
     }
 }
